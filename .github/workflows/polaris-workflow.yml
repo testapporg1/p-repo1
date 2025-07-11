@@ -1,36 +1,17 @@
-name: Polaris scan
+name: CI-Polaris-Basic
 "on":
-  push:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
-  pull_request:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
-  workflow_dispatch: {}
+  workflow_dispatch: null
 jobs:
-  scan:
-    runs-on: ubuntu-latest
+  build:
+    runs-on:
+      - ubuntu-latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v4
-      - name: Polaris Security Scan
+      - name: Polaris Scan
         id: polaris-scan
         uses: blackduck-inc/black-duck-security-scan@v2
         with:
-          polaris_server_url: ${{ vars.POLARIS_URL }}
+          polaris_server_url: ${{ vars.POLARIS_SERVER_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-          polaris_assessment_types: sca
-          polaris_waitForScan: true
-          mark_build_status: failure
-          include_diagnostics: false
-          polaris_prComment_enabled: false
-          polaris_reports_sarif_create: false
-          polaris_upload_sarif_report: false
+          polaris_assessment_types: SCA,SAST
