@@ -23,15 +23,15 @@ jobs:
         uses: actions/checkout@v4
       - name: Black Duck Security Scan
         id: black-duck-security-scan
-        uses: blackduck-inc/black-duck-security-scan@v2
+        uses: blackduck-inc/black-duck-security-scan@v2.2.0
         with:
           blackducksca_url: ${{ vars.BLACKDUCKSCA_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCKSCA_TOKEN }}
           blackducksca_waitForScan: true
           mark_build_status: failure
           include_diagnostics: false
-          blackducksca_prComment_enabled: true
+          blackducksca_prComment_enabled: false
           github_token: ${{ secrets.GH_TOKEN }}
           blackducksca_fixpr_enabled: true
-          blackducksca_reports_sarif_create: true
-          blackducksca_upload_sarif_report: true
+          blackducksca_reports_sarif_create: false
+          blackducksca_upload_sarif_report: false
