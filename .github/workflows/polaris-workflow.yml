@@ -30,8 +30,7 @@ jobs:
         run: docker save nginx:latest -o container.tar
 
       - name: Compress
-        run: gzip container.tar
-
+        run: tar -czf container.tar.gz container.tar
 
       - name: Polaris Security Scan
         id: polaris-scan
