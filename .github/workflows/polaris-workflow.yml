@@ -33,5 +33,8 @@ jobs:
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
           ### ASSESSMENT TYPES
           polaris_assessment_types: SCA  # Comma-separated list: SAST,SCA,DAST
+          ### ADDED FOR MY TESTING
+          polaris_test_sca_type: SCA-CONTAINER
+          polaris_artifactToUpload: 'C:\Users\SashikantaMohanty\Desktop\nginx.tar.gz'
           ### SCANNING: Optional fields
           polaris_test_sca_location: hybrid
