@@ -28,6 +28,13 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v5
 
+      ### ✅ ADD THIS
+      - name: Save Docker image
+        run: docker save nginx:latest -o container.tar
+
+      - name: Compress
+        run: tar -czf container.tar.gz container.tar
+
       - name: Polaris Security Scan
         id: polaris-scan
         uses: blackduck-inc/black-duck-security-scan@v2
@@ -39,6 +46,9 @@ jobs:
           polaris_assessment_types: SCA  # Comma-separated list: SAST,SCA,DAST
           ### SCANNING: Optional fields
           polaris_test_sca_location: hybrid
+          ### ADDED FOR MY TESTING
+          polaris_test_sca_type: SCA-CONTAINER
+          polaris_artifactToUpload: 'container.tar.gz'
           ### GITHUB TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Required when PR comments or sarif reports enabled
           polaris_prComment_enabled: true
