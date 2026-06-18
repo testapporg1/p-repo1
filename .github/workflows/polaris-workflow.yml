@@ -34,7 +34,7 @@ jobs:
           ### ASSESSMENT TYPES
           polaris_assessment_types: SCA  # Comma-separated list: SAST,SCA,DAST
           ### ADDED FOR MY TESTING
-          polaris_test_sca_type: SCA-CONTAINER
-          polaris_artifactToUpload: 'C:\Users\SashikantaMohanty\Desktop\nginx.tar.gz'
+          polaris_test_sca_type: SCA-PACKAGE   # for AC-2 test
+          polaris_artifactToUpload: 'container.tar.gz'
           ### SCANNING: Optional fields
           polaris_test_sca_location: hybrid
