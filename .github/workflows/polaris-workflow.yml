@@ -24,6 +24,15 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v5
 
+      
+      ### ✅ ADD THIS
+      - name: Save Docker image
+        run: docker save nginx:latest -o container.tar
+
+      - name: Compress
+        run: gzip container.tar
+
+
       - name: Polaris Security Scan
         id: polaris-scan
         uses: blackduck-inc/black-duck-security-scan@v2
