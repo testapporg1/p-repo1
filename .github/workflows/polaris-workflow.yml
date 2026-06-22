@@ -46,11 +46,10 @@ jobs:
           polaris_assessment_types: SCA  # Comma-separated list: SAST,SCA,DAST
           ### SCANNING: Optional fields
           polaris_test_sca_location: hybrid
-          ### ADDED FOR MY TESTING
-          polaris_test_sca_type: SCA-CONTAINER
-          polaris_artifactToUpload: 'container.tar.gz'
           ### GITHUB TOKEN
           github_token: ${{ secrets.GITHUB_TOKEN }}  # Required when PR comments or sarif reports enabled
           polaris_prComment_enabled: true
           ### FIX PULL REQUEST CREATION
           polaris_fixpr_enabled: true
+          polaris_fixpr_filter_severities: "high"
+          polaris_fixpr_maxCount: 10
