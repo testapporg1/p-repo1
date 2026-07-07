@@ -1,4 +1,4 @@
-# Quickstart: Black Duck Security Scan Action with polaris:
+#  Quickstart: Black Duck Security Scan Action with polaris:
 #     https://blackduck-dev.zoominsoftware.io/bundle/bridge/page/documentation/t_github-polaris-quickstart.html
 name: Polaris Security Scan
 on:
