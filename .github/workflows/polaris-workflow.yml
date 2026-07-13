@@ -52,7 +52,7 @@ jobs:
           polaris_assessment_types: SCA
 
           ### Container Scan Settings
-          polaris_test_sca_type: SCA-CONTAINER
+          polaris_test_sca_type: SCA-CONTAINER,SCA-SIGNATURE
 
           # Generated in previous step
           polaris_artifactToUpload: ./polaris-container-test-v1.zip
