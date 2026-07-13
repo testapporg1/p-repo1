@@ -54,8 +54,7 @@ jobs:
           ### Container Scan Settings
           polaris_test_sca_type: SCA-CONTAINER,SCA-SIGNATURE
 
-          # Generated in previous step
-          polaris_artifactToUpload: ./polaris-container-test-v1.zip
+          
 
           polaris_container_name: alpine-test
 
