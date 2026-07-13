@@ -54,9 +54,9 @@ jobs:
           ### Container Scan Settings
           polaris_test_sca_type: SCA-CONTAINER
 
-          
+          polaris_artifactToUpload: ./polaris-container-test-v1.zip
 
-          polaris_container_name: alpine-test
+          
 
           ### Scan Location
           polaris_test_sca_location: remote
