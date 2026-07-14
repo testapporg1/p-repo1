@@ -4,12 +4,7 @@ on:
   push:
     branches:
       - main
-      - master
-      - develop
-      - stage
-      - release
-
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 permissions:
   contents: write
@@ -23,49 +18,26 @@ jobs:
       - name: Checkout Source
         uses: actions/checkout@v5
 
-      # Pull nginx image
-      - name: Pull Docker Image
-        run: docker pull nginx:latest
-
-      # Create container archive
-      - name: Save Docker Image
-        run: docker save nginx:latest -o container.tar
-
-      # Compress archive
-      - name: Compress Archive
-        shell: powershell
-        run: Compress-Archive -Path container.tar -DestinationPath polaris-container-test-v1.zip -Force
-
       - name: Polaris Security Scan
-        id: polaris-scan
         uses: blackduck-inc/black-duck-security-scan@SIGINT-5886
 
         with:
-          ### Bridge 4.5.0 RC1
           bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc1/bridge-cli-bundle-4.5.0rc1-win64.zip
 
-          ### Required Polaris configuration
           polaris_server_url: ${{ vars.POLARIS_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
 
-          ### Assessment Types
           polaris_assessment_types: SCA
 
-          ###Container Scan Settings
-          polaris_test_sca_type: SCA-CONTAINER,SCA-PACKAGE
+          polaris_test_sca_type: SCA-CONTAINER
           polaris_container_name: alpine-test
-          polaris_artifactToUpload: ./polaris-container-test-v1.zip
+          polaris_artifactToUpload: C:/Users/SashikantaMohanty/Desktop/polaris-container-test-v1.zip
 
-          
-
-          ### Scan Location
           polaris_test_sca_location: remote
 
-          ### GitHub Features
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
           polaris_prComment_enabled: true
-
           polaris_fixpr_enabled: true
           polaris_fixpr_filter_severities: high
           polaris_fixpr_maxCount: 10
