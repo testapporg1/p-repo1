@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v5
 
       - name: Polaris Security Scan
-        uses: blackduck-inc/black-duck-security-scan@SIGINT-5886
+        uses: blackduck-inc/black-duck-security-scan@main
 
         with:
           bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc1/bridge-cli-bundle-4.5.0rc1-win64.zip
