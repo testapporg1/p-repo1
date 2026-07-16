@@ -22,18 +22,14 @@ jobs:
         uses: blackduck-inc/black-duck-security-scan@main
 
         with:
-          bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc1/bridge-cli-bundle-4.5.0rc1-win64.zip
+          bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc2/bridge-cli-bundle-4.5.0rc2-win64.zip
 
           polaris_server_url: ${{ vars.POLARIS_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
 
-          polaris_assessment_types: SCA
+          polaris_assessment_types: SAST
 
-          polaris_test_sca_type: SCA-CONTAINER
-          polaris_container_name: alpine-test
-          polaris_artifactToUpload: C:/Users/SashikantaMohanty/Desktop/polaris-container-test-v1.zip
-
-          polaris_test_sca_location: remote
+          
 
           github_token: ${{ secrets.GITHUB_TOKEN }}
 
