@@ -22,7 +22,7 @@ jobs:
         uses: blackduck-inc/black-duck-security-scan@main
 
         with:
-          bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc2/bridge-cli-bundle-4.5.0rc2-win64.zip
+          bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc3/bridge-cli-bundle-4.5.0rc3-win64.zip
 
           polaris_server_url: ${{ vars.POLARIS_URL }}
           polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
