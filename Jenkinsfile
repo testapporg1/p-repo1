@@ -5,7 +5,7 @@ pipeline {
             when {
                 // Triggering Black Duck Security Scan on master branch or Pull Request
                 anyOf {
-                    branch 'master'
+                    branch 'main'
                     branch pattern: "PR-\\d+", comparator: "REGEXP"
                 }
             }
