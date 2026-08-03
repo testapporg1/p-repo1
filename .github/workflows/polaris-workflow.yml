@@ -1,39 +1,65 @@
-name: Polaris Security Scan
-
+# Quickstart: Bridge CLI with polaris:
+#     https://docs.blackduck.com/r/bridge/latest/bridge-cli-guide/quickstart-polaris-bridge-cli-in-a-github-workflow.html
+name: Polaris Bridge CLI Scan
 on:
   push:
     branches:
       - main
-  workflow_dispatch:
-
-permissions:
-  contents: write
-  pull-requests: write
-
+      - master
+      - develop
+      - stage
+      - release
+  pull_request:
+    branches:
+      - main
+      - master
+      - develop
+      - stage
+      - release
+  workflow_dispatch: {}
 jobs:
   polaris:
-    runs-on: sh_window_sashi
-
+    runs-on: ubuntu-latest
+    env:
+      ### SCANNING: Required fields
+      BRIDGE_POLARIS_SERVERURL: ${{ vars.POLARIS_URL }}
+      BRIDGE_POLARIS_ACCESSTOKEN: ${{ secrets.POLARIS_ACCESS_TOKEN }}
+      ### ASSESSMENT TYPES
+      BRIDGE_POLARIS_ASSESSMENT_TYPES: SAST,SCA
+      ### SCANNING: Configuration fields
+      BRIDGE_POLARIS_APPLICATION_NAME: ${{ github.event.repository.name }}
+      BRIDGE_POLARIS_PROJECT_NAME: ${{ github.event.repository.name }}
+      BRIDGE_POLARIS_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+      ### GitHub repository information
+      BRIDGE_GITHUB_REPOSITORY_OWNER_NAME: ${{ github.repository_owner }}
+      BRIDGE_GITHUB_REPOSITORY_NAME: ${{ github.event.repository.name }}
+      BRIDGE_GITHUB_REPOSITORY_BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
+      ### SCANNING: Optional fields
+      BRIDGE_POLARIS_TEST_SAST_LOCATION: hybrid
+      BRIDGE_POLARIS_TEST_SCA_LOCATION: hybrid
+      ### TOOLING: Bridge CLI download URL
+      BRIDGE_DOWNLOAD_URL: https://repo.blackduck.com/bds-integrations-release/com/blackduck/integration/bridge/binaries/bridge-cli-bundle/latest
     steps:
       - name: Checkout Source
         uses: actions/checkout@v5
 
-      - name: Polaris Security Scan
-        uses: blackduck-inc/black-duck-security-scan@main
+      - name: Download & Setup Bridge CLI on Windows
+        if: runner.os == 'Windows'
+        shell: powershell
+        run: |-
+          curl.exe -L -o $env:TEMP\bridge.zip "$env:BRIDGE_DOWNLOAD_URL/bridge-cli-bundle-win64.zip"
+          Expand-Archive $env:TEMP\bridge.zip -DestinationPath $env:TEMP\bridge -Force
+          $exe = Get-ChildItem $env:TEMP\bridge -Recurse -Filter bridge-cli.exe | Select-Object -First 1
+          "BRIDGE_CLI_INSTALL_DIR=$($exe.FullName)" | Out-File -FilePath $env:GITHUB_ENV -Append
 
-        with:
-          bridgecli_download_url: https://artifactory.tools.duckutil.net/artifactory/clops-local/integrations/bridge/binaries/bridge-cli-bundle/4.5.0rc3/bridge-cli-bundle-4.5.0rc3-win64.zip
+      - name: Download & Setup Bridge CLI on macOS/Linux
+        if: runner.os != 'Windows'
+        shell: bash
+        run: |-
+          OS=$([[ "$RUNNER_OS" == "macOS" ]] && ([[ $(uname -m) =~ arm ]] && echo macos_arm || echo macosx) || ([[ $(uname -m) =~ arm ]] && echo linux_arm || echo linux64))
+          curl -sSL -o bridge.zip "$BRIDGE_DOWNLOAD_URL/bridge-cli-bundle-$OS.zip"
+          unzip -qo bridge.zip -d "$RUNNER_TEMP"
+          echo "BRIDGE_CLI_INSTALL_DIR=$(find "$RUNNER_TEMP" -type f -name bridge-cli | head -n1)" >> "$GITHUB_ENV"
 
-          polaris_server_url: ${{ vars.POLARIS_URL }}
-          polaris_access_token: ${{ secrets.POLARIS_ACCESS_TOKEN }}
-
-          polaris_assessment_types: SAST
-
-          
-
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-
-          
-          polaris_fixpr_enabled: true
-          # polaris_fixpr_filter_severities: HIGH
-          # polaris_fixpr_maxCount: 10
+      - name: Polaris Scan
+        run: ${{ env.BRIDGE_CLI_INSTALL_DIR }} --stage polaris
