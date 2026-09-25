@@ -15,6 +15,7 @@ on:
 permissions:
   contents: write               # Required to push changes or create fix branches
   pull-requests: write          # Required to add comments or create fix pull requests
+  issues: write
 jobs:
   polaris:
     runs-on: sh_window_sashi
