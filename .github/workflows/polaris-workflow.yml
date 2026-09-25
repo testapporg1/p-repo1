@@ -23,8 +23,11 @@ jobs:
         uses: actions/checkout@v5
 
       ### ✅ ADD THIS
-      - name: Save Docker image
-        run: docker save nginx:latest -o container.tar
+      - name: Pull Image
+        run: podman pull nginx:latest
+      
+      - name: Save Container Image
+        run: podman save nginx:latest -o container.tar
 
       - name: Compress
         run: tar -czf container.tar.gz container.tar
