@@ -1,4 +1,4 @@
-# Quickstart: Bridge CLI with polaris:
+# Quickstart: Bridge CLI with polaris Testing:
 #     https://docs.blackduck.com/r/bridge/latest/bridge-cli-guide/quickstart-polaris-bridge-cli-in-a-github-workflow.html
 name: Polaris Bridge CLI Scan
 on:
