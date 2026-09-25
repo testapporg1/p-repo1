@@ -37,7 +37,7 @@ jobs:
           coverity_user: ${{ secrets.COVERITY_USER }}
           coverity_passphrase: ${{ secrets.COVERITY_PASSPHRASE }}
           ### LOCAL ANALYSIS
-          coverity_local: true  # Enable local analysis mode
+          #coverity_local: true  # Enable local analysis mode
           ### Configuration if Bridge diagnostic files needs to be uploaded
           include_diagnostics: true
           ### GITHUB TOKEN
